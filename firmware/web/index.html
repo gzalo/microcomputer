@@ -460,13 +460,40 @@
             background: radial-gradient(circle at 30% 30%, #f66, #a00);
             box-shadow: 0 0 8px #f00;
         }
+
+        /* Instructions section */
+        .instructions {
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            color: #aaa;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .instructions h3 {
+            color: #ddd;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .instructions ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        .instructions a {
+            color: #4a9;
+            text-decoration: none;
+        }
+        .instructions a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="microcomputer">
         <!-- Top section with LCD -->
         <div class="top-section">
-            <div class="key-switch" id="key-switch" title="Key Switch (toggle LCD view)"></div>
+            <div class="key-switch on" id="key-switch" title="Key Switch (toggle LCD view)"></div>
             <div class="lcd-container">
                 <div class="lcd on" id="lcd">
                     <div class="lcd-line" id="lcd-line0">8080 Emulator</div>
@@ -485,9 +512,8 @@
         <div class="front-panel">
             <!-- Left: switches and LEDs -->
             <div class="switch-led-area">
-                <!-- High byte LEDs (Address high / M[X+0]) -->
                 <div class="row-group">
-                    <div class="led-row" id="led-row-high">
+                    <div class="led-row" id="led-row-low">
                         <div class="led" data-bit="15"></div>
                         <div class="led" data-bit="14"></div>
                         <div class="led" data-bit="13"></div>
@@ -499,9 +525,8 @@
                     </div>
                 </div>
 
-                <!-- High byte switches -->
                 <div class="row-group">
-                    <div class="switch-row" id="switch-row-high">
+                    <div class="switch-row" id="switch-row-low">
                         <div class="toggle-switch" data-bit="15"></div>
                         <div class="toggle-switch" data-bit="14"></div>
                         <div class="toggle-switch" data-bit="13"></div>
@@ -523,9 +548,8 @@
                     </div>
                 </div>
 
-                <!-- Low byte LEDs (Data / M[X+1]) -->
                 <div class="row-group">
-                    <div class="led-row" id="led-row-low">
+                    <div class="led-row" id="led-row-high">
                         <div class="led" data-bit="7"></div>
                         <div class="led" data-bit="6"></div>
                         <div class="led" data-bit="5"></div>
@@ -537,9 +561,8 @@
                     </div>
                 </div>
 
-                <!-- Low byte switches -->
                 <div class="row-group">
-                    <div class="switch-row" id="switch-row-low">
+                    <div class="switch-row" id="switch-row-high">
                         <div class="toggle-switch" data-bit="7"></div>
                         <div class="toggle-switch" data-bit="6"></div>
                         <div class="toggle-switch" data-bit="5"></div>
@@ -647,6 +670,23 @@
                 <span>Halted</span>
             </div>
         </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li><strong>Key Switch</strong> (top left): Toggle register/memory view</li>
+                <li><strong>Run Mode Switch</strong> (top right): Click to cycle Stop / Slow / Fast</li>
+                <li><strong>Toggle Switches</strong>: Set 16-bit address or 8/16-bit data (top row is higher byte)</li>
+                <li><strong>RESET</strong>: Reset the CPU (PC = 0) or loads a program from the predefined ones</li>
+                <li><strong>SINGLE STEP</strong>: Execute one instruction</li>
+                <li><strong>STORE ADDR</strong>: Set the current address/program counter from switches</li>
+                <li><strong>STORE BYTE</strong>: Write (top) byte to memory at current address</li>
+                <li><strong>STORE WORD</strong>: Write both bytes to memory</li>
+                <li><strong>AUTO INCREMENT</strong>: Automatically increment address after store</li>
+            </ul>
+            <p>Source code: <a href="https://github.com/gzalo/microcomputer" target="_blank">github.com/gzalo/microcomputer</a></p>
+        </div>
     </div>
 
     <script src="emulator.js"></script>
@@ -658,12 +698,6 @@
             requestAnimationFrame(mainLoop);
         };
 
-        // State
-        let switchValue = 0;
-        let buttonState = 0;
-        let startTime = performance.now();
-        let runMode = 0; // 0=stop, 1=slow, 2=fast
-
         // Button bit mappings (from microcomputer.h)
         const INPUT_STOP_RUN_BIT1 = 0x001;
         const INPUT_STOP_RUN_BIT2 = 0x002;
@@ -674,6 +708,12 @@
         const INPUT_STORE_WORD    = 0x040;
         const INPUT_AUTO_INC      = 0x080;
         const INPUT_KEY_SWITCH    = 0x100;
+
+        // State
+        let switchValue = 0;
+        let buttonState = INPUT_KEY_SWITCH; // Start with key turned on
+        let startTime = performance.now();
+        let runMode = 0; // 0=stop, 1=slow, 2=fast
 
         // Get exported functions
         function getExports() {

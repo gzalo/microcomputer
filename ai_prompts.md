@@ -143,6 +143,5 @@ Can you make a github action that will build and deploy the firmware/web part in
 
 ---
 
-I'm getting "Getting Pages deployment status...
-Error: Deployment cancelled."
+Start with the key turned and also add instructions and link to the repo (https://github.com/gzalo/microcomputer) to the web version
 
