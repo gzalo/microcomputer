@@ -5,6 +5,7 @@
 #include "shift_register.h"
 #include "programs.h"
 #include "pico/stdlib.h"
+#include <stddef.h>
 
 static void button_update(button_state_t *state, uint16_t current) {
     state->previous = state->current;

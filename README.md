@@ -28,3 +28,7 @@ Other I/O devices like keyboard and console may be added later.
 `00.01.10.01.12.15`
 Underscore on second line shows cursor position, one or two bytes depending on instruction length.
 
+## AI
+
+The firmware for this project was created with Claude Code (Opus 4.5 model). I've recorded most of the prompts in `ai_prompts.md`.
+

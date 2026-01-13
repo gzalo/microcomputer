@@ -1,0 +1,70 @@
+name: Build and Deploy Web Emulator
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 'latest'
+
+      - name: Verify Emscripten
+        run: emcc --version
+
+      - name: Build Web Emulator
+        working-directory: firmware/web
+        run: |
+          emcc main_web.c lcd_web.c shift_register_web.c ../cpu8080.c ../memory.c ../disasm.c ../microcomputer.c \
+            -O2 \
+            -s WASM=1 \
+            -s EXPORTED_RUNTIME_METHODS='["cwrap","UTF8ToString"]' \
+            -s ALLOW_MEMORY_GROWTH=1 \
+            -s MODULARIZE=0 \
+            -s EXPORT_NAME="Module" \
+            -I. \
+            -I.. \
+            -o emulator.js
+
+      - name: Prepare deployment files
+        run: |
+          mkdir -p _site
+          cp firmware/web/index.html _site/
+          cp firmware/web/emulator.js _site/
+          cp firmware/web/emulator.wasm _site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
