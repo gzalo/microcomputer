@@ -9,10 +9,22 @@ Other I/O devices like keyboard and console may be added later.
 
 ## Tech details
 
-- Inputs: 16 addr/data switches (read using two pcf8574 with pullups) + 7 extra buttons/switches read directly
-- Outputs: 16 LED (driven by 2x 74hc595) + 6 for alphanumeric 16x2 LCD
+- Inputs: 
+  - 16 addr/data switches (read using two pcf8574 with pullups) 
+  - 8 extra buttons/switches that are read directly:
+    - 2 inputs connected to 3 position switches: stop/run slow/run fast
+    - 1 input connected to a momentary push button: single step
+    - 1 input connected to a momentary push button: reset (PC=0)
+    - 1 input connected to a momentary push button: store to address latch
+    - 1 input connected to a momentary push button: store byte
+    - 1 input connected to a momentary push button: store word
+    - 1 input connected to a switch: auto increment Y/N
+- Outputs:
+  - 16 LEDs for low and high parts (driven by 2x 74hc595) 
+  - 6 for alphanumeric 16x2 LCD (low 4 bits + rs + enable)
 
 - LCD:
 `0123: Mov X, R0`
 `00.01.10.01.12.15`
-(underscore one or two bytes depending on the case)
+Underscore on second line shows cursor position, one or two bytes depending on instruction length.
+
