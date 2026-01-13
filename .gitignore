@@ -3,3 +3,6 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+~*.lck
+*-backups
+\#auto_saved_files\#
