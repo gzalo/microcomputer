@@ -140,3 +140,9 @@ Use @web/panel.png and @web/photo.jpg for design inspiration and layout for the 
 ---
 
 Can you make a github action that will build and deploy the firmware/web part into github pages?
+
+---
+
+I'm getting "Getting Pages deployment status...
+Error: Deployment cancelled."
+
