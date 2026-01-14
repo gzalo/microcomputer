@@ -14,7 +14,6 @@
             font-family: 'Arial', sans-serif;
             background: #ececec;
             min-height: 100vh;
-            display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -22,17 +21,16 @@
 
         .microcomputer {
             width: 800px;
+            margin: 0 auto;
         }
 
         /* Top section with LCD - angled appearance */
         .top-section {
             background: linear-gradient(180deg, #777 0%, #828282 100%);
-            border-radius: 8px 8px 0 0;
             padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 2px solid #333;
             border-bottom: none;
             box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
         }
@@ -139,9 +137,6 @@
         /* Main front panel */
         .front-panel {
             background: linear-gradient(180deg, #a8a8a8 0%, #888 5%, #999 50%, #888 95%, #777 100%);
-            border: 2px solid #333;
-            border-top: 1px solid #666;
-            border-radius: 0 0 4px 4px;
             padding: 20px;
             display: grid;
             grid-template-columns: 1fr auto;
@@ -402,6 +397,8 @@
 
         /* Registers panel */
         .registers-panel {
+            width: 700px;
+            margin: 0 auto;
             background: #ddd;
             padding: 15px;
             margin-top: 25px;
@@ -433,6 +430,8 @@
 
         /* Status section - at bottom */
         .status-bar {
+            width: 700px;
+            margin: 0 auto;
             background: #ddd;
             padding: 10px 20px;
             border-radius: 0 0 8px 8px;
@@ -465,6 +464,8 @@
 
         /* Instructions section */
         .instructions {
+            width: 700px;
+            margin: 0 auto;
             margin-top: 20px;
             padding: 15px 20px;
             font-size: 12px;
@@ -628,63 +629,63 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Registers panel -->
-        <div class="registers-panel">
-            <div class="registers-title">CPU Registers</div>
-            <div class="registers-grid">
-                <div class="reg"><div class="reg-name">A</div><div class="reg-value" id="reg-a">00</div></div>
-                <div class="reg"><div class="reg-name">BC</div><div class="reg-value" id="reg-bc">0000</div></div>
-                <div class="reg"><div class="reg-name">DE</div><div class="reg-value" id="reg-de">0000</div></div>
-                <div class="reg"><div class="reg-name">HL</div><div class="reg-value" id="reg-hl">0000</div></div>
-                <div class="reg"><div class="reg-name">SP</div><div class="reg-value" id="reg-sp">0000</div></div>
-                <div class="reg"><div class="reg-name">PC</div><div class="reg-value" id="reg-pc">0000</div></div>
-                <div class="reg"><div class="reg-name">Flags</div><div class="reg-value" id="reg-f">00</div></div>
-                <div class="reg" style="grid-column: span 3;"><div class="reg-name">S Z - AC - P - C</div><div class="reg-value" id="flags">- - - -- - - - -</div></div>
-            </div>
+    <!-- Registers panel -->
+    <div class="registers-panel">
+        <div class="registers-title">CPU Registers</div>
+        <div class="registers-grid">
+            <div class="reg"><div class="reg-name">A</div><div class="reg-value" id="reg-a">00</div></div>
+            <div class="reg"><div class="reg-name">BC</div><div class="reg-value" id="reg-bc">0000</div></div>
+            <div class="reg"><div class="reg-name">DE</div><div class="reg-value" id="reg-de">0000</div></div>
+            <div class="reg"><div class="reg-name">HL</div><div class="reg-value" id="reg-hl">0000</div></div>
+            <div class="reg"><div class="reg-name">SP</div><div class="reg-value" id="reg-sp">0000</div></div>
+            <div class="reg"><div class="reg-name">PC</div><div class="reg-value" id="reg-pc">0000</div></div>
+            <div class="reg"><div class="reg-name">Flags</div><div class="reg-value" id="reg-f">00</div></div>
+            <div class="reg" style="grid-column: span 3;"><div class="reg-name">S Z - AC - P - C</div><div class="reg-value" id="flags">- - - -- - - - -</div></div>
         </div>
+    </div>
 
-        <!-- Status bar at bottom -->
-        <div class="status-bar">
-            <div class="status-item">
-                <div class="status-led" id="status-running"></div>
-                <span>Running</span>
-            </div>
-            <div class="status-item">
-                <div class="status-led" id="status-halted"></div>
-                <span>Halted</span>
-            </div>
+    <!-- Status bar at bottom -->
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-led" id="status-running"></div>
+            <span>Running</span>
         </div>
+        <div class="status-item">
+            <div class="status-led" id="status-halted"></div>
+            <span>Halted</span>
+        </div>
+    </div>
 
-        <!-- Program selector bar -->
-        <div class="program-bar">
-            <label>Program: </label>
-            <select id="program-select">
-                <option value="0">None (Manual)</option>
-                <option value="1">Counter</option>
-                <option value="2">Memory Fill</option>
-                <option value="3">Fibonacci</option>
-                <option value="4">Delay Count</option>
-                <option value="5">Stack Test</option>
-            </select>
-        </div>
+    <!-- Program selector bar -->
+    <div class="program-bar">
+        <label>Program: </label>
+        <select id="program-select">
+            <option value="0">None (Manual)</option>
+            <option value="1">Counter</option>
+            <option value="2">Memory Fill</option>
+            <option value="3">Fibonacci</option>
+            <option value="4">Delay Count</option>
+            <option value="5">Stack Test</option>
+        </select>
+    </div>
 
-        <!-- Instructions -->
-        <div class="instructions">
-            <h3>Instructions</h3>
-            <ul>
-                <li><strong>Key Switch</strong> (top left): Toggle register/memory view</li>
-                <li><strong>Run Mode Switch</strong> (top right): Click to cycle Stop / Slow / Fast</li>
-                <li><strong>Toggle Switches</strong>: Set 16-bit address or 8/16-bit data (top row is higher byte)</li>
-                <li><strong>RESET</strong>: Reset the CPU (PC = 0) or loads a program from the predefined ones</li>
-                <li><strong>SINGLE STEP</strong>: Execute one instruction</li>
-                <li><strong>STORE ADDR</strong>: Set the current address/program counter from switches</li>
-                <li><strong>STORE BYTE</strong>: Write (top) byte to memory at current address</li>
-                <li><strong>STORE WORD</strong>: Write both bytes to memory</li>
-                <li><strong>AUTO INCREMENT</strong>: Automatically increment address after store</li>
-            </ul>
-            <p>Source code: <a href="https://github.com/gzalo/microcomputer" target="_blank">github.com/gzalo/microcomputer</a></p>
-        </div>
+    <!-- Instructions -->
+    <div class="instructions">
+        <h3>Instructions</h3>
+        <ul>
+            <li><strong>Key Switch</strong> (top left): Toggle register/memory view</li>
+            <li><strong>Run Mode Switch</strong> (top right): Click to cycle Stop / Slow / Fast</li>
+            <li><strong>Toggle Switches</strong>: Set 16-bit address or 8/16-bit data (top row is higher byte)</li>
+            <li><strong>RESET</strong>: Reset the CPU (PC = 0) or loads a program from the predefined ones</li>
+            <li><strong>SINGLE STEP</strong>: Execute one instruction</li>
+            <li><strong>STORE ADDR</strong>: Set the current address/program counter from switches</li>
+            <li><strong>STORE BYTE</strong>: Write (top) byte to memory at current address</li>
+            <li><strong>STORE WORD</strong>: Write both bytes to memory</li>
+            <li><strong>AUTO INCREMENT</strong>: Automatically increment address after store</li>
+        </ul>
+        <p>Source code: <a href="https://github.com/gzalo/microcomputer" target="_blank">github.com/gzalo/microcomputer</a></p>
     </div>
 
     <script src="emulator.js"></script>
