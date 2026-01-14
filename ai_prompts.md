@@ -145,3 +145,6 @@ Can you make a github action that will build and deploy the firmware/web part in
 
 Start with the key turned and also add instructions and link to the repo (https://github.com/gzalo/microcomputer) to the web version
 
+---
+
+When changing program-select make it so that the reset button is pressed for a bit

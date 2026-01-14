@@ -12,7 +12,7 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            background: #2a2a2a;
+            background: #ececec;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -129,7 +129,7 @@
             text-shadow: 0 0 2px #4a7a2a;
         }
         .lcd-cursor {
-            animation: blink 0.5s infinite;
+            text-decoration: underline;
         }
         @keyframes blink {
             0%, 49% { background: #2a4a1a; color: #4a6b2a; }
@@ -318,6 +318,10 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.4), inset 0 2px 4px rgba(0,0,0,0.3);
             transform: translateY(2px);
         }
+        .reset-btn.pressed {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4), inset 0 2px 4px rgba(0,0,0,0.3);
+            transform: translateY(2px);
+        }
 
         /* Control toggles */
         .control-toggle {
@@ -381,12 +385,10 @@
 
         /* Program selector bar */
         .program-bar {
-            background: #333;
             padding: 10px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #aaa;
             font-size: 12px;
         }
         .program-bar select {
@@ -400,9 +402,9 @@
 
         /* Registers panel */
         .registers-panel {
-            background: #222;
+            background: #ddd;
             padding: 15px;
-            color: #aaa;
+            margin-top: 25px;
         }
         .registers-title {
             font-size: 12px;
@@ -423,15 +425,15 @@
         .reg-name {
             font-size: 10px;
             color: #666;
+            font-weight: bold;
         }
         .reg-value {
             font-size: 16px;
-            color: #4a9;
         }
 
         /* Status section - at bottom */
         .status-bar {
-            background: #1a1a1a;
+            background: #ddd;
             padding: 10px 20px;
             border-radius: 0 0 8px 8px;
             display: flex;
@@ -465,14 +467,10 @@
         .instructions {
             margin-top: 20px;
             padding: 15px 20px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            color: #aaa;
             font-size: 12px;
             line-height: 1.6;
         }
         .instructions h3 {
-            color: #ddd;
             margin-bottom: 10px;
             font-size: 14px;
         }
@@ -631,19 +629,6 @@
             </div>
         </div>
 
-        <!-- Program selector bar -->
-        <div class="program-bar">
-            <label>Program: </label>
-            <select id="program-select">
-                <option value="0">None (Manual)</option>
-                <option value="1">Counter</option>
-                <option value="2">Memory Fill</option>
-                <option value="3">Fibonacci</option>
-                <option value="4">Delay Count</option>
-                <option value="5">Stack Test</option>
-            </select>
-        </div>
-
         <!-- Registers panel -->
         <div class="registers-panel">
             <div class="registers-title">CPU Registers</div>
@@ -669,6 +654,19 @@
                 <div class="status-led" id="status-halted"></div>
                 <span>Halted</span>
             </div>
+        </div>
+
+        <!-- Program selector bar -->
+        <div class="program-bar">
+            <label>Program: </label>
+            <select id="program-select">
+                <option value="0">None (Manual)</option>
+                <option value="1">Counter</option>
+                <option value="2">Memory Fill</option>
+                <option value="3">Fibonacci</option>
+                <option value="4">Delay Count</option>
+                <option value="5">Stack Test</option>
+            </select>
         </div>
 
         <!-- Instructions -->
@@ -780,6 +778,18 @@
                 const val = parseInt(e.target.value);
                 switchValue = (switchValue & 0xFF00) | val;
                 updateSwitchUI();
+
+                // Simulate a short RESET button press when changing programs
+                const resetBtn = document.getElementById('btn-reset');
+                // add visual pressed state
+                resetBtn.classList.add('pressed');
+                // set the input bit for reset
+                buttonState |= INPUT_RESET;
+                // release after a short delay
+                setTimeout(() => {
+                    buttonState &= ~INPUT_RESET;
+                    resetBtn.classList.remove('pressed');
+                }, 200);
             });
 
             // Momentary push buttons
