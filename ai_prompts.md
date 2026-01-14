@@ -148,3 +148,11 @@ Start with the key turned and also add instructions and link to the repo (https:
 ---
 
 When changing program-select make it so that the reset button is pressed for a bit
+
+---
+
+Extract the device from this photo into its own 3d isometric model. face with green lcd should be flat, face with switches should be a bit slanted like /_/. Keep bottom, lateral and top face 
+
+---
+
+Make the interface of the web emulator 3d (but isometric-like, not perspective projection) similar to @Gemini_Generated_Image_so7i7wso7i7wso7i.png . Have a few controls to adjust the rotation of the camera, just using css if possible

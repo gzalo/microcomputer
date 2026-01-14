@@ -12,27 +12,190 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            background: #ececec;
+            background: linear-gradient(135deg, #d0d0d0 0%, #e8e8e8 50%, #d0d0d0 100%);
             min-height: 100vh;
-            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             padding: 20px;
+            padding-top: 60px;
         }
 
+        /* 3D Scene container */
+        .scene {
+            perspective: none; /* Isometric = no perspective */
+            width: 1000px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* 3D Controls */
+        .view-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(50, 50, 50, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 12px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .view-controls h4 {
+            margin-bottom: 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+        }
+        .control-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            gap: 10px;
+        }
+        .control-row label {
+            width: 70px;
+            font-size: 11px;
+        }
+        .control-row input[type="range"] {
+            width: 100px;
+            cursor: pointer;
+        }
+        .control-row span {
+            width: 40px;
+            text-align: right;
+            font-family: monospace;
+            font-size: 11px;
+        }
+        .view-controls button {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            background: #555;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .view-controls button:hover {
+            background: #666;
+        }
+
+        /* 3D microcomputer case */
         .microcomputer {
             width: 800px;
-            margin: 0 auto;
+            height: 280px;
+            transform-style: preserve-3d;
+            transform: rotateX(var(--rotateX, 60deg)) rotateZ(var(--rotateZ, -45deg)) scale(var(--scale, 0.7));
+            transition: transform 0.3s ease;
+            position: relative;
         }
 
-        /* Top section with LCD - angled appearance */
+        /* 3D Case container */
+        .case-3d {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Front face - main panel with switches */
+        .case-front {
+            position: absolute;
+            width: 800px;
+            height: 280px;
+            background: linear-gradient(180deg, #9a9a9a 0%, #8a8a8a 50%, #7a7a7a 100%);
+            transform: translateZ(100px);
+            backface-visibility: hidden;
+        }
+
+        /* Back face */
+        .case-back {
+            position: absolute;
+            width: 800px;
+            height: 80px;
+            background: linear-gradient(180deg, #5a5a5a 0%, #4a4a4a 100%);
+            transform: translateZ(-100px) rotateY(180deg);
+            bottom: 0;
+            backface-visibility: hidden;
+        }
+
+        /* Left face - trapezoid shape */
+        .case-left {
+            position: absolute;
+            width: 200px;
+            height: 280px;
+            background: linear-gradient(0deg, #5a5a5a 0%, #6a6a6a 100%);
+            transform: translateX(-100px) rotateY(-90deg);
+            left: 0;
+            clip-path: polygon(0% 0%, 100% 71.4%, 100% 100%, 0% 100%);
+            backface-visibility: hidden;
+        }
+
+        /* Right face - trapezoid shape */
+        .case-right {
+            position: absolute;
+            width: 200px;
+            height: 280px;
+            background: linear-gradient(0deg, #7a7a7a 0%, #8a8a8a 100%);
+            transform: translateX(598px) translateY(-119px) translateZ(120px) rotateY(90deg) rotateX(0deg);
+            left: 0;
+            clip-path: polygon(0% 71.4%, 100% 0%, 100% 100%, 0% 100%);
+            backface-visibility: hidden;
+        }
+
+        /* Top face - slanted panel where LCD sits */
+        .case-top {
+            position: absolute;
+            width: 800px;
+            height: 212px;
+            background: linear-gradient(180deg, #707070 0%, #808080 50%, #707070 100%);
+            transform-origin: 0 0;
+            transform: translateY(-127px) translateZ(266px) rotateX(-53deg);
+            top: 0;
+            left: 0;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        /* Bottom face */
+        .case-bottom-face {
+            position: absolute;
+            width: 800px;
+            height: 200px;
+            background: linear-gradient(180deg, #3a3a3a 0%, #4a4a4a 100%);
+            transform: translateY(280px) translateZ(100px) rotateX(-90deg);
+            transform-origin: 0 0;
+            backface-visibility: hidden;
+        }
+
+        /* Shadow on the ground */
+        .case-shadow {
+            position: absolute;
+            width: 850px;
+            height: 250px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 70%);
+            transform: translateY(290px) translateZ(-50px) rotateX(90deg);
+            transform-origin: 0 0;
+        }
+
+        /* Top section with LCD - sits on the slanted top */
         .top-section {
-            background: linear-gradient(180deg, #777 0%, #828282 100%);
-            padding: 15px 20px;
+            position: absolute;
+            width: 720px;
+            left: 40px;
+            top: 25px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: none;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
         }
 
         .key-switch {
@@ -108,6 +271,7 @@
             border: 3px solid #444;
             border-radius: 4px;
             padding: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
         .lcd {
             background: #4a6b2a;
@@ -134,9 +298,20 @@
             50%, 100% { background: transparent; }
         }
 
-        /* Main front panel */
+        /* Front panel content container - positioned on front face */
+        .case-front-content {
+            position: absolute;
+            width: 800px;
+            height: 280px;
+            transform: translateZ(100px);
+            transform-style: preserve-3d;
+        }
+
+        /* Front panel content - sits on the front face */
         .front-panel {
-            background: linear-gradient(180deg, #a8a8a8 0%, #888 5%, #999 50%, #888 95%, #777 100%);
+            position: absolute;
+            width: 100%;
+            height: 100%;
             padding: 20px;
             display: grid;
             grid-template-columns: 1fr auto;
@@ -236,7 +411,6 @@
             bottom: auto;
             top: 3px;
         }
-
         .bit-labels {
             display: flex;
             justify-content: center;
@@ -489,26 +663,64 @@
     </style>
 </head>
 <body>
-    <div class="microcomputer">
-        <!-- Top section with LCD -->
-        <div class="top-section">
-            <div class="key-switch on" id="key-switch" title="Key Switch (toggle LCD view)"></div>
-            <div class="lcd-container">
-                <div class="lcd on" id="lcd">
-                    <div class="lcd-line" id="lcd-line0">8080 Emulator</div>
-                    <div class="lcd-line" id="lcd-line1">Ready</div>
-                </div>
-            </div>
-            <!-- Run mode 3-position switch -->
-            <div class="run-mode-switch">
-                <div class="run-mode-label">SLOW</div>
-                <div class="three-pos-switch" id="run-mode-switch" title="Click to cycle: Stop/Slow/Fast"></div>
-                <div class="run-mode-label">FAST</div>
-            </div>
+    <!-- 3D View Controls -->
+    <div class="view-controls">
+        <h4>3D View</h4>
+        <div class="control-row">
+            <label>Tilt (X)</label>
+            <input type="range" id="rotateX" min="0" max="90" value="60">
+            <span id="rotateX-val">60</span>
         </div>
+        <div class="control-row">
+            <label>Rotate (Z)</label>
+            <input type="range" id="rotateZ" min="-180" max="180" value="-45">
+            <span id="rotateZ-val">-45</span>
+        </div>
+        <div class="control-row">
+            <label>Scale</label>
+            <input type="range" id="scale" min="30" max="150" value="70">
+            <span id="scale-val">70%</span>
+        </div>
+        <button id="reset-view">Reset View</button>
+        <button id="front-view">Front View</button>
+        <button id="top-view">Top View</button>
+    </div>
 
-        <!-- Main front panel -->
-        <div class="front-panel">
+    <div class="scene">
+        <div class="microcomputer" id="microcomputer-3d">
+            <!-- 3D Case Structure -->
+            <div class="case-3d">
+                <!-- Shadow -->
+                <div class="case-shadow"></div>
+                <!-- Case faces -->
+                <div class="case-front"></div>
+                <div class="case-back"></div>
+                <div class="case-left"></div>
+                <div class="case-right"></div>
+                <div class="case-top">
+                    <!-- Top section with LCD - on slanted top -->
+                    <div class="top-section">
+                        <div class="key-switch on" id="key-switch" title="Key Switch (toggle LCD view)"></div>
+                        <div class="lcd-container">
+                            <div class="lcd on" id="lcd">
+                                <div class="lcd-line" id="lcd-line0">8080 Emulator</div>
+                                <div class="lcd-line" id="lcd-line1">Ready</div>
+                            </div>
+                        </div>
+                        <!-- Run mode 3-position switch -->
+                        <div class="run-mode-switch">
+                            <div class="run-mode-label">SLOW</div>
+                            <div class="three-pos-switch" id="run-mode-switch" title="Click to cycle: Stop/Slow/Fast"></div>
+                            <div class="run-mode-label">FAST</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-bottom-face"></div>
+            </div>
+
+            <!-- Front panel content - on the front face -->
+            <div class="case-front-content">
+                <div class="front-panel">
             <!-- Left: switches and LEDs -->
             <div class="switch-led-area">
                 <div class="row-group">
@@ -627,6 +839,8 @@
                         <span>N</span>
                     </div>
                 </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -928,6 +1142,52 @@
             updateDisplay();
             requestAnimationFrame(mainLoop);
         }
+
+        // 3D View Controls
+        const microcomputer3d = document.getElementById('microcomputer-3d');
+        const rotateXSlider = document.getElementById('rotateX');
+        const rotateZSlider = document.getElementById('rotateZ');
+        const scaleSlider = document.getElementById('scale');
+        const rotateXVal = document.getElementById('rotateX-val');
+        const rotateZVal = document.getElementById('rotateZ-val');
+        const scaleVal = document.getElementById('scale-val');
+
+        function update3DView() {
+            const rx = rotateXSlider.value;
+            const rz = rotateZSlider.value;
+            const s = scaleSlider.value / 100;
+            microcomputer3d.style.setProperty('--rotateX', rx + 'deg');
+            microcomputer3d.style.setProperty('--rotateZ', rz + 'deg');
+            microcomputer3d.style.setProperty('--scale', s);
+            rotateXVal.textContent = rx;
+            rotateZVal.textContent = rz;
+            scaleVal.textContent = scaleSlider.value + '%';
+        }
+
+        rotateXSlider.addEventListener('input', update3DView);
+        rotateZSlider.addEventListener('input', update3DView);
+        scaleSlider.addEventListener('input', update3DView);
+
+        document.getElementById('reset-view').addEventListener('click', () => {
+            rotateXSlider.value = 60;
+            rotateZSlider.value = -45;
+            scaleSlider.value = 70;
+            update3DView();
+        });
+
+        document.getElementById('front-view').addEventListener('click', () => {
+            rotateXSlider.value = 0;
+            rotateZSlider.value = 0;
+            scaleSlider.value = 100;
+            update3DView();
+        });
+
+        document.getElementById('top-view').addEventListener('click', () => {
+            rotateXSlider.value = 90;
+            rotateZSlider.value = 0;
+            scaleSlider.value = 80;
+            update3DView();
+        });
     </script>
 </body>
 </html>
