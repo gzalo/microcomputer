@@ -10,7 +10,7 @@ Extra I/O devices like keyboard and console may be added later.
 
 ![Microcomputer](images/panel.png)
 
-![Photo](images/photo.jpg)
+![Photo](images/photo_new.jpg)
 
 ## Hardware
 
