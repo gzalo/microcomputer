@@ -51,6 +51,7 @@ jobs:
           cp firmware/web/index.html _site/
           cp firmware/web/emulator.js _site/
           cp firmware/web/emulator.wasm _site/
+          cp docs/guia-fiesta-hacker.md _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

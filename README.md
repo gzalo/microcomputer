@@ -8,6 +8,8 @@ Extra I/O devices like keyboard and console may be added later.
 
 [Try the web version here!](https://gzalo.github.io/microcomputer/)
 
+For a hacker-party field guide in Spanish, including the built-in CTF challenges, see [Expediente 8080](docs/guia-fiesta-hacker.md).
+
 ![Microcomputer](images/panel.png)
 
 ![Photo](images/photo_new.jpg)
