@@ -56,6 +56,11 @@ void emu_update(uint16_t switches, uint16_t buttons) {
 }
 
 EMSCRIPTEN_KEEPALIVE
+int emu_examples_enabled(void) {
+    return ENABLE_EXAMPLE_PROGRAMS;
+}
+
+EMSCRIPTEN_KEEPALIVE
 const char* emu_get_lcd_line(int row) {
     if (row < 0 || row > 1) return "";
     return lcd_buffer[row];

@@ -37,6 +37,9 @@ pico_sdk_init()
 
 add_executable(microcomputer main.c lcd.c pcf8574.c shift_register.c cpu8080.c memory.c disasm.c microcomputer.c)
 
+option(ENABLE_EXAMPLE_PROGRAMS "Allow RESET to load bundled programs" OFF)
+target_compile_definitions(microcomputer PRIVATE ENABLE_EXAMPLE_PROGRAMS=$<BOOL:${ENABLE_EXAMPLE_PROGRAMS}>)
+
 pico_set_program_name(microcomputer "microcomputer")
 pico_set_program_version(microcomputer "0.1")
 

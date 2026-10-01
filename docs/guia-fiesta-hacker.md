@@ -1,3 +1,5 @@
+# Expediente 8080
+
 La caja estaba encendida cuando la encontraron. Nadie recuerda haberla conectado. El polvo cubría los interruptores, salvo una línea limpia que iba del banco de bits a la pantalla verde.
 
 Si llegaste hasta aquí, podés intentar hacerla responder. No hay teclado, sistema operativo ni ayuda en la memoria: solo un procesador 8080, 64 KiB y los interruptores del frente.
@@ -25,7 +27,7 @@ Para escribir una secuencia en memoria, pensá en `HL` como un dedo que señala 
 
 | Control | Efecto |
 | --- | --- |
-| **RESET** | Lleva el `PC` a `0000`. Con un programa de ejemplo seleccionado, lo vuelve a cargar. |
+| **RESET** | Lleva el `PC` a `0000`. No borra la memoria. |
 | **Selector de marcha** | Cambia entre parada, lento y rápido. Empieza lento: algunas cosas se entienden mejor al verlas caer. |
 | **SINGLE STEP** | Ejecuta una única instrucción cuando la máquina está detenida. |
 | **STORE ADDR** | Copia los dieciséis interruptores al `PC`; elige dónde mirar o escribir. |
@@ -58,7 +60,7 @@ Esta no es una referencia completa del 8080. Es lo que alguien dejó anotado atr
 
 ## Las tres transmisiones
 
-Escribí tu propio programa desde `0000`, ejecutalo y pará la CPU con `HLT`. Cuando una condición se cumpla, la pantalla LCD mostrará una señal durante unos segundos. 
+Escribí tu propio programa desde `0000`, ejecutalo y pará la CPU con `HLT`. Cuando una condición se cumpla, la pantalla LCD mostrará una señal durante unos segundos. Al completar cada reto, la máquina borra toda la RAM. Para intentar otro reto, armá tu programa desde cero.
 
 | Transmisión | Condición de la señal |
 | --- | --- |
@@ -66,4 +68,4 @@ Escribí tu propio programa desde `0000`, ejecutalo y pará la CPU con `HLT`. Cu
 | **02 — Puerto sellado** | Antes de pararla, escribí `3C` en la dirección `4200`. |
 | **03 — Huella en serie** | Antes de pararla, escribí `10`, `11`, `12`, `13` en las direcciones consecutivas `4300` a `4303`. |
 
-El resultado debe nacer de las instrucciones que cargues. Cada señal recorre te da una pequeña recompensa. La casa abandonada no tiene prisa. Las máquinas antiguas solo cuentan secretos cuando alguien se toma el trabajo de escribirlos.
+El resultado debe nacer de las instrucciones que cargues. Cada señal revela una pequeña recompensa. La casa abandonada no tiene prisa. Las máquinas antiguas solo cuentan secretos cuando alguien se toma el trabajo de escribirlos.

@@ -1,4 +1,5 @@
 @echo off
+setlocal
 REM Build script for web emulator using Emscripten (Windows)
 REM Run after setting up Emscripten environment: emsdk_env.bat
 
@@ -7,9 +8,11 @@ echo Building 8080 Microcomputer Web Emulator...
 REM set path to where The compiler is installed, in "$env:LocalAppData\emsdk"
 
 set PATH=%PATH%;%LocalAppData%\emsdk\upstream\emscripten
+if not defined ENABLE_EXAMPLE_PROGRAMS set ENABLE_EXAMPLE_PROGRAMS=0
 
 emcc main_web.c lcd_web.c shift_register_web.c ../cpu8080.c ../memory.c ../disasm.c ../microcomputer.c ^
     -O2 ^
+    -DENABLE_EXAMPLE_PROGRAMS=%ENABLE_EXAMPLE_PROGRAMS% ^
     -s WASM=1 ^
     -s EXPORTED_RUNTIME_METHODS="['cwrap','UTF8ToString']" ^
     -s ALLOW_MEMORY_GROWTH=1 ^

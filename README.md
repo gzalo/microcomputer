@@ -10,6 +10,8 @@ Extra I/O devices like keyboard and console may be added later.
 
 For a hacker-party field guide in Spanish, including the built-in CTF challenges, see [Expediente 8080](docs/guia-fiesta-hacker.md).
 
+The bundled example programs are disabled by default. RESET only resets the CPU, so programs entered with the front-panel switches stay in memory. To enable loading examples on RESET, configure the Pico firmware with `cmake -S firmware -B build -DENABLE_EXAMPLE_PROGRAMS=ON`. For the web emulator, set `ENABLE_EXAMPLE_PROGRAMS=1` when running `firmware/web/build.sh` or `firmware/web/build.bat`; its program selector appears only in an enabled build.
+
 ![Microcomputer](images/panel.png)
 
 ![Photo](images/photo_new.jpg)

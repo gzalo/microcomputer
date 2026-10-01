@@ -20,6 +20,7 @@ SOURCES=(
 # Emscripten compiler flags
 EMCC_FLAGS=(
     -O2
+    "-DENABLE_EXAMPLE_PROGRAMS=${ENABLE_EXAMPLE_PROGRAMS:-0}"
     -s WASM=1
     -s EXPORTED_RUNTIME_METHODS='["cwrap","UTF8ToString"]'
     -s ALLOW_MEMORY_GROWTH=1

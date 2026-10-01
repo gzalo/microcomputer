@@ -5,6 +5,11 @@
 #include <stdbool.h>
 #include "cpu8080.h"
 
+// Set to 1 at build time to allow RESET to load the bundled programs.
+#ifndef ENABLE_EXAMPLE_PROGRAMS
+#define ENABLE_EXAMPLE_PROGRAMS 0
+#endif
+
 typedef enum {
     MODE_STOP,
     MODE_RUN_SLOW,
