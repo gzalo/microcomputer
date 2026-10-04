@@ -2,40 +2,38 @@
 
 La caja estaba encendida cuando la encontraron. Nadie recuerda haberla conectado. El polvo cubría los interruptores, salvo una línea limpia que iba del banco de bits a la pantalla verde.
 
-Si llegaste hasta aquí, podés intentar hacerla responder. No hay teclado, sistema operativo ni ayuda en la memoria: solo un procesador 8080, 64 KiB y los interruptores del frente.
+Si llegaste hasta aquí, podés intentar hacerla responder. No hay teclado, sistema operativo ni ayuda en la memoria: solo un procesador 8080, 64 KiB de memoria y los interruptores del frente.
 
 ## Despertando la máquina
 
 Los dieciséis interruptores forman un número binario. La fila superior es el byte bajo (bits 7 a 0) y la inferior el byte alto (bits 15 a 8). Arriba significa `1`; abajo, `0`. Ese número puede ser una dirección o un dato, según el botón que uses.
 
-La pantalla muestra la instrucción que espera en el contador de programa (`PC`) y los bytes cercanos. Gira la llave para ver los registros: `A`, `BC`, `DE`, `HL`, `SP` y las banderas.
+La pantalla muestra la instrucción que espera en el contador de programa (`PC`) y los bytes cercanos. Girá la llave para ver los registros: `A`, `BC`, `DE`, `HL`, `SP` y las banderas.
 
 ## Los bolsillos de la máquina
 
-Los registros son pequeñas ubicaciones dentro del procesador. Son más rápidos que la RAM y conservan lo último que la CPU estaba usando. El panel muestra los pares como palabras de 16 bits, aunque cada letra representa un byte.
+Los registros son pequeñas ubicaciones dentro del procesador:
 
 | Registro | Tamaño | Para qué sirve |
 | --- | --- | --- |
-| `A` | 8 bits | Acumulador: es donde terminan muchas cuentas y operaciones lógicas. La primera transmisión observa este valor al detenerse. |
-| `B`, `C`, `D`, `E` | 8 bits c/u | Registros de propósito general. También aparecen agrupados como `BC` y `DE`, pares de 16 bits útiles para contar o guardar direcciones. |
+| `A` | 8 bits | Acumulador: es donde terminan muchas cuentas y operaciones lógicas. |
+| `B`, `C`, `D`, `E` | 8 bits c/u | Registros de propósito general. |
 | `H`, `L` | 8 bits c/u | Juntos forman `HL`, el puntero de memoria más importante. En los mnemónicos, `M` significa “el byte en la dirección `HL`”. |
 | `PC` | 16 bits | Contador de programa: señala el próximo byte que se ejecutará. **STORE ADDR** lo modifica directamente. |
-| `SP` | 16 bits | Puntero de pila: marca dónde se guardan retornos y valores temporales con `PUSH`, `POP`, `CALL` y `RET`. |
+| `SP` | 16 bits | Puntero de pila: marca dónde se guardan retornos y valores temporales al usar `PUSH`, `POP`, `CALL` y `RET`. |
 | `F` | 8 bits | Banderas. `Z` avisa que un resultado fue cero, `C` que hubo acarreo; `S`, `P` y `AC` registran signo, paridad y medio acarreo. Sirven para los saltos condicionales. |
-
-Para escribir una secuencia en memoria, pensá en `HL` como un dedo que señala una celda: cargalo con `LXI H`, escribí mediante `MVI M, ...` y avanzalo con `INX H`. Mirar `PC` después de cada **SINGLE STEP** es la forma más simple de saber si tu programa sigue el camino que imaginaste.
 
 | Control | Efecto |
 | --- | --- |
 | **RESET** | Lleva el `PC` a `0000`. No borra la memoria. |
-| **Selector de marcha** | Cambia entre parada, lento y rápido. Empieza lento: algunas cosas se entienden mejor al verlas caer. |
+| **Selector de marcha** | Cambia entre parada, lento y rápido. |
 | **SINGLE STEP** | Ejecuta una única instrucción cuando la máquina está detenida. |
-| **STORE ADDR** | Copia los dieciséis interruptores al `PC`; elige dónde mirar o escribir. |
+| **STORE ADDR** | Copia los dieciséis interruptores al `PC`: elige dónde mirar o escribir. |
 | **STORE BYTE** | Escribe el byte bajo de los interruptores en la dirección actual. |
 | **STORE WORD** | Escribe los dieciséis bits en la dirección actual, primero el byte bajo. |
-| **AUTO INCREMENT** | Avanza la dirección tras cada escritura. Usalo para cargar un programa byte a byte. |
+| **AUTOINC** | Si está activado, avanza la dirección tras cada escritura. Usalo para cargar un programa byte a byte. |
 
-Para cargar código, pará la máquina, lleva el `PC` a `0000` con **STORE ADDR**, activá **AUTO INCREMENT** y escribí cada byte con **STORE BYTE**. Después volvé a `0000` y usá la marcha lenta, rápida o **SINGLE STEP**. RESET no borra la memoria: si querés volver a empezar, sobrescribí los bytes.
+Para cargar código, pará la máquina, llevá el `PC` a `0000` con **STORE ADDR**, activá **AUTO INCREMENT** y escribí cada byte con **STORE BYTE**. Después volvé a `0000` y usá la marcha lenta, rápida o **SINGLE STEP**. RESET no borra la memoria: si querés volver a empezar, sobrescribí los bytes.
 
 ## Fragmento de la tabla de instrucciones
 

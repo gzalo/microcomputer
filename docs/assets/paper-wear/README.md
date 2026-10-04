@@ -1,0 +1,11 @@
+# Paper-wear overlays
+
+These are transparent grayscale PNGs used by `docs/build_guia_pdf.py`. Keep the transparent background and the filenames below when regenerating them. The builder blends the images into the page **before** its fax/photocopy pass, so the marks share the same lo-fi texture as the text.
+
+| File | Placement in the current PDF | Generation prompt |
+| --- | --- | --- |
+| `coffee-ring.png` | Guide page 1, partly outside the right edge beside the machine photo; final field-log page, mostly outside the lower-left edge below the writing grid. | "Top-down high-resolution flatbed scan of one dried coffee-cup ring stain. Irregular incomplete circular tide mark, layered sediment, feathered paper-wicking edges, and a few tiny splash droplets. Physically plausible archival document damage, monochrome grayscale, isolated on a genuinely transparent background with generous margin. No mug, no paper sheet, no text, no logos, no vignette, no perfect digital circle." |
+| `fold-crease.png` | Pages 2 and 3, across the lower-right edge and footer margin. | "High-resolution flatbed scan of a long, narrow diagonal fold crease from an old paper sheet. Subtle irregular shadow and highlight, tiny broken fibers and abrasion, tapering at both ends. Faint monochrome grayscale, isolated on a genuinely transparent wide canvas. No paper rectangle, no text, no coffee mark, no clean straight digital line." |
+| `foxing-smudges.png` | All guide pages, stretched to A4 with alternating flips/rotation, plus a lighter version on both pocket cards; sparse marks remain near the outside edges so the text block stays clear. | "Transparent archival paper blemish overlay: scattered small foxing spots, faint fingertip handling smudges, a few tiny water tide marks and embedded dust, like a decades-old handled document scanned on a flatbed. Sparse asymmetrical clusters near the outer edges and corners, large clean center for typewritten text. Monochrome light-to-medium gray. Genuinely transparent background; no rectangular page, paper color, coffee ring, fold crease, stamp, text or dark solid patches." |
+
+For replacement, put each regenerated transparent PNG at its listed path. The placement and opacity values are in `composite_wear()` in `docs/build_guia_pdf.py`. Rebuild with `python docs/build_guia_pdf.py`.
