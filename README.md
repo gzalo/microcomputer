@@ -8,6 +8,8 @@ Extra I/O devices like keyboard and console may be added later.
 
 [Try the web version here!](https://gzalo.github.io/microcomputer/)
 
+For a hacker-party field guide in Spanish, including the built-in CTF challenges, see [Expediente 8080](docs/guia-fiesta-hacker.md).
+
 ![Microcomputer](images/panel.png)
 
 ![Photo](images/photo_new.jpg)
@@ -32,6 +34,4 @@ Extra I/O devices like keyboard and console may be added later.
 
 ## AI
 
-The firmware for this project was created with Claude Code (Opus 4.5 model). [I've recorded most of the prompts in here](ai_prompts.md).
-
-
+The firmware for this project was created with LLMs (Claude Opus 4.5, GPT-5 and onwards). [I've recorded most of the prompts in here](ai_prompts.md).

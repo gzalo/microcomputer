@@ -36,6 +36,7 @@ jobs:
         run: |
           emcc main_web.c lcd_web.c shift_register_web.c ../cpu8080.c ../memory.c ../disasm.c ../microcomputer.c \
             -O2 \
+            -DENABLE_EXAMPLE_PROGRAMS=1 \
             -s WASM=1 \
             -s EXPORTED_RUNTIME_METHODS='["cwrap","UTF8ToString"]' \
             -s ALLOW_MEMORY_GROWTH=1 \
@@ -51,6 +52,7 @@ jobs:
           cp firmware/web/index.html _site/
           cp firmware/web/emulator.js _site/
           cp firmware/web/emulator.wasm _site/
+          cp docs/guia-fiesta-hacker.md _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

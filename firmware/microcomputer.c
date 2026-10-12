@@ -3,7 +3,9 @@
 #include "disasm.h"
 #include "lcd.h"
 #include "shift_register.h"
+#if ENABLE_EXAMPLE_PROGRAMS
 #include "programs.h"
+#endif
 #include "pico/stdlib.h"
 #include <stddef.h>
 
@@ -155,6 +157,7 @@ void emulator_update(emulator_t *emu, uint16_t switches, uint16_t buttons) {
 
     if (button_pressed(&emu->buttons, INPUT_RESET, 3, now)) {
         cpu8080_reset(&emu->cpu);
+#if ENABLE_EXAMPLE_PROGRAMS
         // Load test program based on switch value (low byte)
         // 0x01 = Counter, 0x02 = Memfill, 0x03 = Fibonacci
         // 0x04 = Delay count, 0x05 = Stack test
@@ -192,6 +195,7 @@ void emulator_update(emulator_t *emu, uint16_t switches, uint16_t buttons) {
             lcd_print(prog_name);
             sleep_ms(500);
         }
+#endif
         emu->display_dirty = true;
     }
 

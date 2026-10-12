@@ -386,6 +386,9 @@
             align-items: center;
             font-size: 12px;
         }
+        .program-bar[hidden] {
+            display: none;
+        }
         .program-bar select {
             background: #444;
             color: #fff;
@@ -659,7 +662,7 @@
     </div>
 
     <!-- Program selector bar -->
-    <div class="program-bar">
+    <div class="program-bar" id="program-bar" hidden>
         <label>Program: </label>
         <select id="program-select">
             <option value="0">None (Manual)</option>
@@ -678,7 +681,7 @@
             <li><strong>Key Switch</strong> (top left): Toggle register/memory view</li>
             <li><strong>Run Mode Switch</strong> (top right): Click to cycle Stop / Slow / Fast</li>
             <li><strong>Toggle Switches</strong>: Set 16-bit address or 8/16-bit data (top row is lower byte)</li>
-            <li><strong>RESET</strong>: Reset the CPU (PC = 0) or loads a program from the predefined ones</li>
+            <li id="reset-instruction"><strong>RESET</strong>: Reset the CPU (PC = 0)</li>
             <li><strong>SINGLE STEP</strong>: Execute one instruction</li>
             <li><strong>STORE ADDR</strong>: Set the current address/program counter from switches</li>
             <li><strong>STORE BYTE</strong>: Write (top) byte to memory at current address</li>
@@ -718,6 +721,7 @@
         function getExports() {
             return {
                 emu_init: Module.cwrap('emu_init', null, []),
+                emu_examples_enabled: Module.cwrap('emu_examples_enabled', 'number', []),
                 emu_set_time: Module.cwrap('emu_set_time', null, ['number']),
                 emu_update: Module.cwrap('emu_update', null, ['number', 'number']),
                 emu_get_lcd_line: Module.cwrap('emu_get_lcd_line', 'string', ['number']),
@@ -744,6 +748,12 @@
 
         function initUI() {
             emu = getExports();
+
+            if (emu.emu_examples_enabled()) {
+                document.getElementById('program-bar').hidden = false;
+                document.getElementById('reset-instruction').innerHTML =
+                    '<strong>RESET</strong>: Reset the CPU (PC = 0); load the selected example program';
+            }
 
             // Toggle switch click handlers
             document.querySelectorAll('.toggle-switch').forEach(sw => {

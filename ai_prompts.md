@@ -148,3 +148,114 @@ Start with the key turned and also add instructions and link to the repo (https:
 ---
 
 When changing program-select make it so that the reset button is pressed for a bit
+
+---
+
+(NO) Extract the device from this photo into its own 3d isometric model. face with green lcd should be flat, face with switches should be a bit slanted like /_/. Keep bottom, lateral and top face 
+
+---
+
+(NO) Make the interface of the web emulator 3d (but isometric-like, not perspective projection) similar to @Gemini_Generated_Image_so7i7wso7i7wso7i.png . Have a few controls to adjust the rotation of the camera, just using css if possible
+
+---
+
+Given this microcomputer (which is implemented in hardware using switches and stuff), what cool game could I implement so that people can try it out in an event? I can add some additional I/O if needed
+
+---
+
+Anything that uses another thing as an output maybe? let me know what it can be
+
+---
+
+(NO) Is there a way for this to generate a black and white ntsc/pal signal using the pi pico pins? and in that case could it be mapped directly to some of the bytes of the virtual computer memory? and if that's the case, what could be some interesting simple games to run in the emulated console?
+
+---
+
+Could you write some documentation in spanish that show how to use the computer? It can be a bit mysterious as it's meant to be used in a hacker party/event. Also change the logic so that there's some reward when the user completes one or more challenges, like a CTF?
+
+---
+
+Can you make them have to write code instead of giving them the code base? And three challenge should be:
+- Halt with certain value in A
+- Output a certain value to a certain address
+- Output consecutive values to consecutive addresses
+No need to track the challenges in the UI nor the main code. Just show them a message for a few seconds when they have managed to win it! 
+The guide should also mention the different valid opcodes and what they do in a small table
+Make the style even more mysterious, as if you had found this in an old abandoned place and neede to make it work
+
+---
+
+El mensaje de los challenges debería aparecer en la pantalla, no en la web ni en su emulador, no cambies el emulador
+
+---
+
+Looks good, I've tuned it a bit. Can you mention a bit more about the registers and give better "prices" once people win? Like old computer trvia or similar
+
+---
+
+Pueden ser más largas las frases, algo más elaborado que dure minimo 10 segundos y tenga mucho más texto explicativo
+
+---
+
+Add a flag to disable the example programs, keep them off by default. Improve a bit more the words that appear when the user completes each challenge, they can be a bit longer and mysterious,
+
+---
+
+After completing a challenge, the memory should erase (and that should appear at the end of the lcd message too, letting the user know that's happened
+
+---
+
+Algun mensaje (distinto en cada caso) que agradezca al usuario por encontrar lo que tenía que hacer?
+
+---
+
+Add another md file with "solutions to each challenge", showing which bytes to write in each position (and which mnmemonics they represent)
+
+---
+
+Can you add a script or something for creating a printable pdf out of the guia-fiesta-hacker.md document. It needs to follow the same similar format/style as the protocol implies. Something like an old paper, printed with a typewriter manually. Needs to look misterious. Feel free to create or pull images or other content to make it look more real, like a "stamp" or something that says "by gzalo" with some latin words like harry potter or similar. If you cannot do that in one go, let me know which images I need to generate using which prompts and I'll do that manually and store them somewhere
+
+---
+
+Looks great, but could you make these changes:
+- make it look even older. Can make some wrinkles/coffee stains
+- this is meant to be printed in a black and white printer, background can be white, fonts can be pure black
+- make the typography more "jittery", as if it were from a real typewriter, and an effect similar to it being passed through a fax machine and then printed
+- add some quick reference binary table for nibbles (which combination of 4 keys prints makes which symbols)
+
+---
+
+Make the "bitacora de campo" in a new page. Also make the 4 switch binary to hex at the end of the doc (before the bitacora) and please postprocess the entire doc using that lo-fi filter that I really like. The output can be a pdf with just the processed images, it's fine, it will be for printint only
+
+---
+
+If you could improve it by adding more realistic coffee stains and other typical stuff that appears in older papers, replace them with images and let me know what prompts to use to generate each one of those, and where to place the images
+
+---
+
+Sacale la palabra "folio" antes de cada número. Y asegurate que todas las palabras (incluso mayúsculas) que necesitan tilde lo tengan. Sacá lo de "CLASFICIACION: transmision recuperada" y lo de "continuación/archivo recuperado"
+La parte de "los bolsillos de la máquina" puede estar en la siguiente pagina. Y la parte de bitacora de campo no hace falta que tenga numero de oja
+
+---
+
+Make the  Clave binaria de bolsillo a standalone thing (remove it from the original doc), it should measure 6x9 cm. Also make another similar cheatsheet with the instructions (but keep it in the original doc), same size, can be two faces
+
+---
+
+Actually they should be 85.6 mm by 53.98 mm (credit card size)
+
+---
+
+add a gray border to them and make them render in the same page. The ones that are double sided should be touching each other. the other one can be a few cms away so I can cut it
+
+---
+
+Do that and call it "repaso de binario", and the numbers that go 0000 0001 should be more spaced (to suit the header)
+
+---
+
+Puedes hacer un intento de renderizar el expediente-8080 de forma horizontal/apaisada también? para ver como quedaría
+
+---
+
+Mode compiled for web mode should keep the examples enabled
