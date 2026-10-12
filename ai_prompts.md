@@ -255,3 +255,7 @@ Do that and call it "repaso de binario", and the numbers that go 0000 0001 shoul
 ---
 
 Puedes hacer un intento de renderizar el expediente-8080 de forma horizontal/apaisada también? para ver como quedaría
+
+---
+
+Mode compiled for web mode should keep the examples enabled

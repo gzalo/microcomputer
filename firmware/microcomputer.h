@@ -5,9 +5,13 @@
 #include <stdbool.h>
 #include "cpu8080.h"
 
-// Set to 1 at build time to allow RESET to load the bundled programs.
+// Web builds load bundled programs on RESET by default; Pico builds do not.
 #ifndef ENABLE_EXAMPLE_PROGRAMS
+#ifdef __EMSCRIPTEN__
+#define ENABLE_EXAMPLE_PROGRAMS 1
+#else
 #define ENABLE_EXAMPLE_PROGRAMS 0
+#endif
 #endif
 
 typedef enum {
