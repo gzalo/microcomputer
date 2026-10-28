@@ -30,6 +30,12 @@
 #define PIN_LCD_RS      14  // Register Select (0=command, 1=data)
 #define PIN_LCD_EN      15  // Enable pulse
 
+// --- Noritake CU20025SCPB-T20A serial VFD ---
+// GP8 is UART1 TX and is unused by the existing front panel wiring.
+#define PIN_VFD_TX       8
+#define VFD_UART_PORT    uart1
+#define VFD_UART_BAUD    19200
+
 // --- Direct Input Pins (8 switches/buttons) ---
 #define PIN_SW_STOP_RUN     16  // 3-position: stop/run slow/run fast (1 of 2)
 #define PIN_SW_RUN_SPEED    17  // 3-position: stop/run slow/run fast (2 of 2)

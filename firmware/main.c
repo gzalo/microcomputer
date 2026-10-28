@@ -5,7 +5,7 @@
  * - 8080 CPU emulator
  * - 64KB RAM
  * - 16 LEDs showing address high byte and data bus
- * - 16x2 LCD showing disassembly or registers
+ * - 20x2 display showing disassembly or registers
  * - Front panel controls for memory examine/modify
  *
  * Test mode runs only on startup if key switch is OFF.
@@ -84,6 +84,7 @@ static uint32_t challenge_notice_until;
 static uint32_t challenge_notice_started;
 static bool challenge_halt_seen;
 static uint8_t challenge_notice_id;
+static uint8_t challenge_notice_page = 0xff;
 
 #define CHALLENGE_NOTICE_PAGE_MS 3000
 #define CHALLENGE_NOTICE_PAGES 8
@@ -101,7 +102,7 @@ static uint8_t completed_challenge(void) {
 static void lcd_print_line(uint8_t row, const char *text) {
     lcd_set_cursor(0, row);
     lcd_print(text);
-    for (size_t i = strlen(text); i < 16; i++) {
+    for (size_t i = strlen(text); i < 20; i++) {
         lcd_putchar(' ');
     }
 }
@@ -152,6 +153,8 @@ static void update_challenge_notice(uint32_t now) {
         challenge_halt_seen = false;
         challenge_notice_until = 0;
         challenge_notice_id = 0;
+        challenge_notice_page = 0xff;
+        emu.display_suspended = false;
         return;
     }
 
@@ -163,16 +166,23 @@ static void update_challenge_notice(uint32_t now) {
             challenge_notice_id = challenge;
             challenge_notice_started = now;
             challenge_notice_until = now + CHALLENGE_NOTICE_MS;
+            challenge_notice_page = 0xff;
+            emu.display_suspended = true;
         }
     }
 
     if (challenge_notice_until != 0) {
         if ((int32_t)(challenge_notice_until - now) > 0) {
             uint8_t page = (now - challenge_notice_started) / CHALLENGE_NOTICE_PAGE_MS;
-            show_challenge_notice(challenge_notice_id, page);
+            if (page != challenge_notice_page) {
+                show_challenge_notice(challenge_notice_id, page);
+                challenge_notice_page = page;
+            }
         } else {
             challenge_notice_until = 0;
             challenge_notice_id = 0;
+            challenge_notice_page = 0xff;
+            emu.display_suspended = false;
             emu.display_dirty = true;
         }
     }

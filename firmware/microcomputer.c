@@ -40,6 +40,7 @@ void emulator_init(emulator_t *emu) {
     emu->last_step_time = 0;
     emu->step_interval_ms = 300;
     emu->display_dirty = true;
+    emu->display_suspended = false;
     emu->cursor_pos = 0;
     emu->last_cursor_time = 0;
     emu->show_registers = false;
@@ -52,9 +53,12 @@ static void update_leds(emulator_t *emu) {
 }
 
 static void update_lcd_registers(emulator_t *emu) {
+    if (!emu->display_dirty) return;
+    emu->display_dirty = false;
+
     // Show CPU registers (20x2 display)
-    // Line 1: A:xx BC:xxxx DE:xxxx (19 chars)
-    // Line 2: HL:xxxx SP:xxxx F:xx (19 chars)
+    // Line 1: A:xx BC:xxxx DE:xxxx (20 chars)
+    // Line 2: HL:xxxx SP:xxxx F:xx (20 chars)
     lcd_set_cursor(0, 0);
     lcd_print("A:");
     lcd_print_hex8(emu->cpu.a);
@@ -77,11 +81,13 @@ static void update_lcd_registers(emulator_t *emu) {
 static void update_lcd_disasm(emulator_t *emu, uint32_t now) {
     uint16_t addr = emu->cpu.pc;
     int instr_len = disasm_get_length(addr);
+    bool cursor_changed = false;
 
     if (emu->display_dirty) {
         emu->display_dirty = false;
         emu->cursor_pos = 0;
         emu->last_cursor_time = now;
+        cursor_changed = true;
 
         char disasm_buf[12];
 
@@ -103,6 +109,7 @@ static void update_lcd_disasm(emulator_t *emu, uint32_t now) {
     if (now - emu->last_cursor_time >= 100) {
         emu->last_cursor_time = now;
         emu->cursor_pos++;
+        cursor_changed = true;
         // For 1-byte instruction: cycle through positions 0,1 (2 chars)
         // For 2-byte instruction: cycle through positions 0,1,3,4 (4 chars)
         // For 3-byte instruction: cycle through positions 0,1,3,4,6,7 (6 chars)
@@ -117,8 +124,10 @@ static void update_lcd_disasm(emulator_t *emu, uint32_t now) {
     uint8_t char_in_byte = emu->cursor_pos % 2;
     uint8_t col = byte_idx * 3 + char_in_byte;
 
-    lcd_set_cursor(col, 1);
-    lcd_display(true, true, false);  // Display on, cursor on
+    if (cursor_changed) {
+        lcd_set_cursor(col, 1);
+        lcd_display(true, true, false);  // Display on, cursor on
+    }
 }
 
 static void update_lcd(emulator_t *emu, uint32_t now) {
@@ -238,5 +247,5 @@ void emulator_update(emulator_t *emu, uint16_t switches, uint16_t buttons) {
     }
 
     update_leds(emu);
-    update_lcd(emu, now);
+    if (!emu->display_suspended) update_lcd(emu, now);
 }

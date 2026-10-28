@@ -46,6 +46,7 @@ typedef struct {
     uint32_t last_step_time;
     uint32_t step_interval_ms;
     bool display_dirty;
+    bool display_suspended;
     uint8_t cursor_pos;
     uint32_t last_cursor_time;
     bool show_registers;

@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// LCD Commands
+// HD44780 command values. The serial VFD backend only maps CLEAR and HOME;
+// use the functions below for backend-independent display operations.
 #define LCD_CMD_CLEAR           0x01
 #define LCD_CMD_HOME            0x02
 #define LCD_CMD_ENTRY_MODE      0x04
@@ -31,10 +32,10 @@
 #define LCD_5x10_DOTS           0x04
 #define LCD_5x8_DOTS            0x00
 
-// Initialize LCD in 4-bit mode
+// Initialize the selected display backend
 void lcd_init(void);
 
-// Send a command to the LCD
+// Send a backend-specific command (CLEAR and HOME are portable)
 void lcd_command(uint8_t cmd);
 
 // Send data (character) to the LCD
@@ -46,7 +47,7 @@ void lcd_clear(void);
 // Return cursor to home position
 void lcd_home(void);
 
-// Set cursor position (col: 0-15, row: 0-1)
+// Set cursor position (col: 0-19, row: 0-1)
 void lcd_set_cursor(uint8_t col, uint8_t row);
 
 // Print a string to the LCD

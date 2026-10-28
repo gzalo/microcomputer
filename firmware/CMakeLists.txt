@@ -35,7 +35,17 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(microcomputer main.c lcd.c pcf8574.c shift_register.c cpu8080.c memory.c disasm.c microcomputer.c)
+set(DISPLAY_BACKEND "VFD" CACHE STRING "Display backend: VFD or HD44780")
+set_property(CACHE DISPLAY_BACKEND PROPERTY STRINGS VFD HD44780)
+if(DISPLAY_BACKEND STREQUAL "VFD")
+    set(DISPLAY_SOURCE vfd_serial.c)
+elseif(DISPLAY_BACKEND STREQUAL "HD44780")
+    set(DISPLAY_SOURCE lcd.c)
+else()
+    message(FATAL_ERROR "DISPLAY_BACKEND must be VFD or HD44780")
+endif()
+
+add_executable(microcomputer main.c ${DISPLAY_SOURCE} pcf8574.c shift_register.c cpu8080.c memory.c disasm.c microcomputer.c)
 
 option(ENABLE_EXAMPLE_PROGRAMS "Allow RESET to load bundled programs" OFF)
 target_compile_definitions(microcomputer PRIVATE ENABLE_EXAMPLE_PROGRAMS=$<BOOL:${ENABLE_EXAMPLE_PROGRAMS}>)
@@ -50,7 +60,8 @@ pico_enable_stdio_usb(microcomputer 1)
 # Add the standard library to the build
 target_link_libraries(microcomputer
         pico_stdlib
-        hardware_i2c)
+        hardware_i2c
+        hardware_uart)
 
 # Add the standard include files to the build
 target_include_directories(microcomputer PRIVATE
