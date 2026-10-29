@@ -351,6 +351,12 @@
       "unconnected-(A1-GPIO4-Pad6)": [
         "SR_CLOCK"
       ],
+      "unconnected-(A1-GPIO8-Pad11)": [
+        "LCD_SIN"
+      ],
+      "unconnected-(J1-Pin_2-Pad2)": [
+        "LCD_SIN"
+      ],
       "unconnected-(SW17-A-Pad1)": [
         "SW_KEY"
       ],
